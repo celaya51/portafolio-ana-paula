@@ -35,7 +35,7 @@ body {
   position: relative;
   min-height: 90vh;
   display: flex;
-  align-items: flex-end;
+  align-items: stretch;
   padding: 60px 0 0 0;
   overflow: hidden;
   background: linear-gradient(135deg, #F3ECE7 0%, #E8DFEE 40%, #E3D1D4 75%, #D6DFD8 100%);
@@ -56,8 +56,14 @@ body {
   z-index: 2;
   display: grid;
   grid-template-columns: 1.2fr 1fr;
-  align-items: flex-end;
+  align-items: stretch;
   width: 100%;
+  height: 100%;
+}
+
+.hero-text {
+  align-self: flex-end;
+  padding-bottom: 40px;
 }
 
 .main-title {
@@ -116,14 +122,15 @@ body {
   position: relative;
   display: flex;
   justify-content: center;
+  height: calc(90vh - 60px);
 }
 
 .hero-img {
-  /* Llena el alto disponible del hero (90vh - padding superior de 60px)
-     para que la imagen llegue hasta abajo sin dejar espacio. */
-  max-height: calc(90vh - 60px);
-  width: auto;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
   z-index: 2;
 }
 
@@ -477,6 +484,20 @@ h2 {
 @media (max-width: 768px) {
   .hero-content {
     grid-template-columns: 1fr;
+    height: auto;
+  }
+  .hero-image-wrapper {
+    height: auto;
+    display: block;
+  }
+  .hero-img {
+    display: block;
+    width: auto;
+    max-width: 92%;
+    height: auto;
+    max-height: 65vh;
+    object-fit: contain;
+    margin: 0 auto;
   }
   .stats-card {
     position: static;
@@ -505,7 +526,7 @@ h2 {
   grid-template-columns: 0.8fr 1.8fr 1.4fr;
   align-items: center;
   gap: 30px;
-  padding: 40px 50px;
+  padding: 40px 50px 0 50px;
   position: relative;
 }
 
@@ -545,14 +566,16 @@ h2 {
   justify-content: flex-end;
   position: relative;
   gap: 15px;
+  align-self: end;
 }
 
 .banner-img {
-  height: 190px;
+  height: 220px;
   width: auto;
   object-fit: contain;
   /* Ligera sombra inferior para despegarla del fondo */
   filter: drop-shadow(0 10px 15px rgba(0,0,0,0.08));
+  display: block;
 }
 
 /* Sello circular con SVG */
