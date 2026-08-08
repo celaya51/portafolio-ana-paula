@@ -461,6 +461,28 @@ h2 {
   letter-spacing: 1px;
 }
 
+.footer-info .info-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-info a.info-item:hover {
+  color: var(--pink-dusty);
+  transform: translateX(-3px);
+}
+
+.footer-info .info-item svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--pink-dusty);
+}
+
 /* ================= MEDIA QUERIES (RESPONSIVO) ================= */
 @media (max-width: 1024px) {
   .work-services-section {
@@ -478,6 +500,9 @@ h2 {
   }
   .footer-info {
     text-align: center;
+  }
+  .footer-info .info-item {
+    justify-content: center;
   }
 }
 
