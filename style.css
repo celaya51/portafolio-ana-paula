@@ -519,6 +519,7 @@ h2 {
   margin-bottom: 80px;
   overflow: hidden;
   border: 1px solid rgba(82, 99, 86, 0.15);
+  border-bottom: none;
 }
 
 .banner-container {
@@ -620,7 +621,7 @@ h2 {
   .banner-container {
     grid-template-columns: 1fr;
     text-align: center;
-    padding: 35px 25px;
+    padding: 35px 25px 0 25px;
   }
 
   .banner-text p {
