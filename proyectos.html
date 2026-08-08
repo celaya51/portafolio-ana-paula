@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyectos | Ana Paula Studio</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Estilos específicos para el encabezado de la página de proyectos -->
+  <style>
+    .page-header {
+      background: linear-gradient(135deg, #F3ECE7 0%, #E8DFEE 50%, #E3D1D4 100%);
+      padding: 60px 0 50px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--olive-dark);
+      margin-bottom: 25px;
+      letter-spacing: 1px;
+      transition: transform 0.2s ease;
+    }
+    .back-link:hover {
+      transform: translateX(-5px);
+    }
+    .page-title-block {
+      max-width: 700px;
+    }
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(3rem, 6vw, 4.5rem);
+      color: var(--olive-dark);
+      line-height: 1.05;
+      margin-bottom: 15px;
+    }
+    .page-subtitle {
+      color: var(--olive-sage);
+      font-size: 1.1rem;
+      font-weight: 400;
+    }
+    .projects-full-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 20px;
+    }
+    @media (max-width: 1024px) {
+      .projects-full-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      .projects-full-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER / BANNER PROYECTOS ================= -->
+  <header class="page-header">
+    <div class="container">
+      <a href="index.html" class="back-link">← BACK TO HOME</a>
+      
+      <div class="page-title-block">
+        <h1 class="page-title">Selected Work ✦</h1>
+        <p class="page-subtitle">
+          A collection of brand identities, web design projects, and digital experiences crafted with strategy and purpose.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT (6 PROYECTOS) ================= -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- Cuadrícula de 6 proyectos (2 filas x 3 columnas en desktop) -->
+      <div class="projects-full-grid">
+        
+        <!-- Proyecto 1 -->
+        <article class="project-card">
+          <div class="project-img"><img src="proyecto1.jpg" alt="Lumière Cosmetics"></div>
+          <div class="project-info">
+            <div>
+              <h3>LUMIÈRE COSMETICS</h3>
+              <p>Branding & Packaging</p>
+            </div>
+            <a href="#" class="arrow-btn">↗</a>
+          </div>
+        </article>
+
+        <!-- Proyecto 2 -->
+        <article class="project-card">
+          <div class="project-img"><img src="proyecto2.jpg" alt="Elevate Coaching"></div>
+          <div class="project-info">
+            <div>
+              <h3>ELEVATE COACHING</h3>
+              <p>Web Design & Development</p>
+            </div>
+            <a href="#" class="arrow-btn">↗</a>
+          </div>
+        </article>
+
+        <!-- Proyecto 3 -->
+        <article class="project-card">
+          <div class="project-img"><img src="proyecto3.jpg" alt="Sofia Living"></div>
+          <div class="project-info">
+            <div>
+              <h3>SOFIA LIVING</h3>
+              <p>Brand Identity</p>
+            </div>
+            <a href="#" class="arrow-btn">↗</a>
+          </div>
+        </article>
+
+        <!-- Proyecto 4 -->
+        <article class="project-card">
+          <div class="project-img"><img src="proyecto4.jpg" alt="Solstice Candles"></div>
+          <div class="project-info">
+            <div>
+              <h3>SOLSTICE CANDLES</h3>
+              <p>Branding & Packaging</p>
+            </div>
+            <a href="#" class="arrow-btn">↗</a>
+          </div>
+        </article>
+
+        <!-- Proyecto 5 -->
+        <article class="project-card">
+          <div class="project-img"><img src="proyecto5.jpg" alt="Arcadia Realty"></div>
+          <div class="project-info">
+            <div>
+              <h3>ARCADIA REALTY</h3>
+              <p>Web Design & Development</p>
+            </div>
+            <a href="#" class="arrow-btn">↗</a>
+          </div>
+        </article>
+
+        <!-- Proyecto 6 -->
+        <article class="project-card">
+          <div class="project-img"><img src="proyecto6.jpg" alt="Urban Harvest"></div>
+          <div class="project-info">
+            <div>
+              <h3>URBAN HARVEST</h3>
+              <p>Brand Identity</p>
+            </div>
+            <a href="#" class="arrow-btn">↗</a>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================= FOOTER / CONTACTO ================= -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-cta">
+        <h2>Let's Create<br><span>Something Beautiful</span></h2>
+        <p>I'm always open to new opportunities and exciting collaborations. Let's bring your ideas to life.</p>
+        <a href="mailto:hello@anapaula.studio" class="btn-pink">GET IN TOUCH →</a>
+      </div>
+
+      <div class="footer-center">
+        <div class="badge-wrapper">
+          <img src="ana-paula-avatar.png" alt="Ana Paula" class="avatar-footer">
+        </div>
+        <p class="signature-footer">Ana Paula</p>
+      </div>
+
+      <div class="footer-info">
+        <p>📍 ZAPOPAN, JALISCO</p>
+        <p>✉️ HELLO@ANAPAULA.STUDIO</p>
+        <p>🌐 WWW.ANAPAULA.STUDIO</p>
+        <p>📷 @ANAPAULA.STUDIO</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
