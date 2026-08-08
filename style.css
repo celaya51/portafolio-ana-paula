@@ -508,23 +508,53 @@ h2 {
 
 @media (max-width: 768px) {
   .hero-content {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    column-gap: 24px;
     height: auto;
+  }
+  .hero-text {
+    display: contents;
   }
   .hero-image-wrapper {
-    height: auto;
-    display: block;
+    display: contents;
+  }
+  .main-title {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+    text-align: left;
+    font-size: clamp(2.5rem, 11.5vw, 4rem);
+    margin-bottom: 0;
   }
   .hero-img {
+    grid-column: 2;
+    grid-row: 1;
     display: block;
-    width: auto;
-    max-width: 92%;
+    width: 100%;
+    max-width: 100%;
     height: auto;
-    max-height: 65vh;
     object-fit: contain;
-    margin: 0 auto;
+    margin: 0;
+  }
+  .subtitle {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .description {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+  .signature-block {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
+  .hero-info-bar {
+    grid-column: 1 / -1;
+    grid-row: 5;
   }
   .stats-card {
+    grid-column: 1 / -1;
+    grid-row: 6;
     position: static;
     margin-top: 20px;
     width: 100%;
