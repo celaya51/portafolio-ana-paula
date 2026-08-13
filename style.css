@@ -198,6 +198,10 @@ h2 {
   color: var(--olive-dark);
 }
 
+.compact-title {
+  line-height: 1;
+}
+
 .view-all {
   text-decoration: none;
   font-weight: 600;
