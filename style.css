@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'NathingStill';
+  src: url('fonts/NathingStill-Regular-BF6a75776225450.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   --bg-cream: #F8F6F0;
   --olive-dark: #2F3E33;
@@ -8,7 +16,7 @@
   --white: #FFFFFF;
   --font-serif: 'Playfair Display', serif;
   --font-display: 'DM Serif Display', serif;
-  --font-signature: 'Mr De Haviland', cursive;
+  --font-signature: 'NathingStill', cursive;
   --font-sans: 'Plus Jakarta Sans', sans-serif;
 }
 
@@ -769,13 +777,13 @@ button:focus-visible {
 }
 
 /* Monograma AP */
-.banner-monogram span {
-  font-family: var(--font-serif);
-  font-size: clamp(7.5rem, 12vw, 11.25rem);
-  font-weight: 700;
+.banner-monogram img {
+  width: min(100%, 220px);
+  height: auto;
+  max-height: 180px;
+  object-fit: contain;
   color: var(--olive-dark);
   line-height: 0.8;
-  letter-spacing: -3px;
   opacity: 0.85;
   display: block;
 }
@@ -871,8 +879,9 @@ button:focus-visible {
     margin-top: 10px;
   }
 
-  .banner-monogram span {
-    font-size: clamp(6rem, 28vw, 9rem);
+  .banner-monogram img {
+    width: min(100%, 220px);
+    max-height: 160px;
   }
 }
 
