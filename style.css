@@ -439,12 +439,12 @@ h2 {
 
 .brand-item {
   background: var(--white);
-  height: 90px;
+  height: 78px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 15px;
+  padding: 10px;
   border: 1px solid #EBE9E1;
 }
 
