@@ -753,6 +753,10 @@ button:focus-visible {
   .brands-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .brand-item img {
+    filter: none;
+    opacity: 1;
+  }
 }
 /* ================= BANNER / PHILOSOPHY SECTION ================= */
 .banner-section {
