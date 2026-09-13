@@ -14,7 +14,7 @@ const translations = {
     statExperience: 'DE EXPERIENCIA',
     statProjects: 'PROYECTOS ENTREGADOS',
     statClients: 'CLIENTES SATISFECHOS',
-    selectedWork: 'Trabajo seleccionado ✦',
+    selectedWork: 'Proyectos destacados ✦',
     viewAll: 'VER TODOS LOS PROYECTOS →',
     projectBrandingPackaging: 'Branding y packaging',
     projectWebDesign: 'Diseño y desarrollo web',
