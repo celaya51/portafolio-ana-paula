@@ -11,26 +11,39 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Mr+De+Haviland&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    .page-header { position: relative; padding: 60px 0 50px; background: linear-gradient(135deg, #F3ECE7 0%, #E8DFEE 50%, #E3D1D4 100%); border-bottom: 1px solid rgba(0, 0, 0, 0.06); }
-    .back-link { display: inline-flex; margin-bottom: 25px; color: var(--olive-dark); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-decoration: none; transition: transform 0.2s ease; }
-    .back-link:hover { transform: translateX(-5px); }
-    .page-title { margin-bottom: 15px; color: var(--olive-dark); font-family: var(--font-display); font-size: clamp(3rem, 6vw, 4.5rem); line-height: 1.05; }
-    .page-subtitle { max-width: 700px; color: var(--olive-sage); font-size: 1.1rem; }
-    .projects-full-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-    @media (max-width: 1024px) { .projects-full-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 768px) { .projects-full-grid { grid-template-columns: 1fr; } }
-
-    /* Carrusel de proyectos y ficha con galería vertical. */
-    .projects-full-grid { display:flex; gap:24px; overflow-x:auto; scroll-snap-type:x mandatory; padding:8px 4px 24px; scrollbar-color:var(--olive-sage) var(--bg-cream); }
-    .projects-full-grid .project-card { flex:0 0 calc((100% - 48px)/3); scroll-snap-align:start; }
-    .project-open { display:block; width:100%; border:0; background:transparent; text-align:left; color:inherit; font:inherit; cursor:pointer; }
-    .projects-full-grid .project-img { height:320px; }
-    .carousel-controls { display:flex; align-items:center; justify-content:flex-end; gap:12px; margin-bottom:16px; }
-    .carousel-controls button, .project-close { width:46px; height:46px; border:1px solid var(--olive-sage); border-radius:50%; background:var(--bg-cream); color:var(--olive-dark); font-size:24px; cursor:pointer; }
-    .carousel-controls button:disabled { opacity:.35; cursor:default; }
-    .carousel-hint { margin-right:auto; color:var(--olive-sage); font-size:.85rem; }
-    .project-dialog { margin:auto; padding:0; width:min(1100px,94vw); height: min(800px,88vh); height:min(800px,88dvh); max-width:none; max-height:none; border:0; border-radius:20px; background:var(--bg-cream); color:var(--text-dark); overflow:hidden; box-shadow:0 24px 90px #0004; }
-    .project-dialog::backdrop { background:rgba(24,32,27,.72); }
+    .page-header { position:relative; padding:54px 0 36px; background:linear-gradient(135deg,#F3ECE7 0%,#E8DFEE 50%,#E3D1D4 100%); border-bottom:1px solid rgba(47,62,51,.06); }
+    .back-link { display:inline-flex; margin-bottom:22px; color:var(--olive-dark); font-size:.75rem; font-weight:600; letter-spacing:.08em; text-decoration:none; transition:transform .2s; }
+    .back-link:hover { transform:translateX(-4px); }
+    .page-title { margin-bottom:14px; color:var(--olive-dark); font-family:var(--font-display); font-size:clamp(2.8rem,5vw,4.3rem); line-height:1.08; }
+    .page-subtitle { max-width:660px; color:var(--olive-sage); font-size:1rem; line-height:1.7; }
+    .main-content { padding:32px 0 48px; }
+    .project-showcase { width:100%; }
+    .carousel-stage { position:relative; background:var(--olive-dark); }
+    #projects-carousel { width:100%; overflow:hidden; touch-action:pan-y pinch-zoom; }
+    .carousel-track { display:flex; width:100%; gap:0; will-change:transform; }
+    #projects-carousel .project-card { flex:0 0 56%; min-width:0; margin:0; padding:0; border:0; border-radius:0; background:transparent; opacity:1; transform:none; box-shadow:none; transition:none; }
+    .project-open { display:block; position:relative; width:100%; padding:0; border:0; background:transparent; color:white; font:inherit; text-align:left; cursor:pointer; user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent; }
+    #projects-carousel .project-img { height:clamp(410px,60vh,640px); margin:0; border-radius:0; }
+    #projects-carousel .project-img img { display:block; width:100%; height:100%; object-fit:cover; pointer-events:none; transition:transform .8s cubic-bezier(.2,.7,.3,1); }
+    #projects-carousel .project-info { position:absolute; inset:auto 0 0; display:block; padding:100px clamp(28px,4vw,64px) 38px; background:linear-gradient(transparent,rgba(14,23,18,.78)); pointer-events:none; }
+    #projects-carousel .project-info > div { display:flex; flex-direction:column-reverse; gap:8px; }
+    #projects-carousel .project-info h3 { color:#fff; font-family:var(--font-display); font-weight:400; font-size:clamp(1.65rem,3vw,2.8rem); line-height:1.1; letter-spacing:-.015em; }
+    #projects-carousel .project-info p { color:#fff; font-size:.7rem; font-weight:500; letter-spacing:.14em; text-transform:uppercase; }
+    .project-open:focus-visible { outline:3px solid var(--pink-dusty); outline-offset:-5px; }
+    @media(hover:hover) {
+      .project-open:hover .project-img img { transform:scale(1.025); }
+    }
+    .carousel-arrow { position:absolute; z-index:2; top:50%; display:grid; place-items:center; width:48px; height:48px; transform:translateY(-50%); border:1px solid rgba(255,255,255,.65); border-radius:50%; background:rgba(34,47,38,.3); color:white; backdrop-filter:blur(10px); cursor:pointer; transition:background .2s,color .2s; }
+    .carousel-arrow svg { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+    .carousel-arrow:hover { background:var(--bg-cream); color:var(--olive-dark); }
+    #projects-prev { left:22px; }
+    #projects-next { right:22px; }
+    .carousel-meta { display:flex; align-items:center; justify-content:space-between; gap:20px; max-width:1280px; margin:auto; padding:18px 5% 0; color:var(--olive-sage); }
+    .carousel-hint { font-size:.76rem; }
+    #projects-play { display:inline-flex; align-items:center; gap:9px; padding:8px 0 8px 16px; border:0; background:transparent; color:var(--olive-dark); font:inherit; font-size:.75rem; cursor:pointer; white-space:nowrap; }
+    #projects-play svg { width:15px; height:15px; fill:currentColor; }
+    .project-dialog { margin:auto; padding:0; width:min(1100px,94vw); height:min(800px,88vh); height:min(800px,88dvh); max-width:none; max-height:none; border:0; border-radius:18px; background:var(--bg-cream); color:var(--text-dark); overflow:hidden; box-shadow:0 24px 90px #0004; }
+    .project-dialog::backdrop { background:rgba(24,32,27,.75); backdrop-filter:blur(5px); }
     .project-dialog-layout { display:grid; grid-template-columns:1fr 1.2fr; height:100%; min-height:0; }
     .project-copy { padding:64px 40px 40px; overflow-y:auto; }
     .project-copy h2 { font-family:var(--font-display); font-size:clamp(1.8rem,3vw,3rem); line-height:1.1; overflow-wrap:anywhere; margin:16px 0 24px; }
@@ -40,35 +53,33 @@
     .project-gallery figure { margin:0 0 16px; }
     .project-gallery img { display:block; width:100%; height:auto; border-radius:8px; }
     .image-placeholder { min-height:270px; height:28vh; display:grid; place-items:center; border:1px dashed #a5aaa0; border-radius:8px; background:linear-gradient(135deg,#e1e6de,#eedbdb); color:var(--olive-sage); font-size:.9rem; }
-    .project-close { position:absolute; right:12px; top:12px; z-index:2; }
+    .project-close { position:absolute; right:12px; top:12px; z-index:2; display:grid; place-items:center; width:46px; height:46px; border:1px solid var(--olive-sage); border-radius:50%; background:var(--bg-cream); color:var(--olive-dark); font-size:24px; cursor:pointer; }
     body.project-is-open { overflow:hidden; }
-    @media(max-width:1024px) { .projects-full-grid .project-card { flex-basis:calc((100% - 24px)/2); } }
     @media(max-width:640px) {
-      .projects-full-grid .project-card { flex-basis:88%; }
-      .projects-full-grid .project-img { height:300px; }
-      .project-dialog { width:96vw; height:94dvh; }
+      .page-header { padding:60px 0 28px; }
+      .back-link { margin-bottom:20px; font-size:.7rem; }
+      .page-title { font-size:clamp(2.5rem,10vw,3.2rem); max-width:12ch; }
+      .page-subtitle { font-size:.9rem; }
+      .main-content { padding:20px 0 32px; }
+      #projects-carousel .project-card { flex-basis:88%; }
+      #projects-carousel .project-img { height:480px; height:clamp(380px,62svh,530px); }
+      #projects-carousel .project-info { padding:100px 24px 30px; }
+      #projects-carousel .project-info h3 { font-size:1.85rem; }
+      #projects-carousel .project-info p { font-size:.64rem; letter-spacing:.09em; }
+      .carousel-arrow { width:42px; height:42px; }
+      #projects-prev { left:12px; }
+      #projects-next { right:12px; }
+      .carousel-meta { gap:10px; padding-top:12px; }
+      .carousel-hint { font-size:.68rem; max-width:25ch; }
+      #projects-play { font-size:.7rem; }
+      .project-dialog { width:96vw; height:94vh; height:94dvh; }
       .project-dialog-layout { grid-template-columns:1fr; grid-template-rows:auto minmax(0,1fr); }
       .project-copy { padding:28px 60px 20px 24px; max-height:32dvh; }
       .project-copy h2 { font-size:1.7rem; margin:8px 0 12px; }
       .project-gallery { padding:20px; }
       .image-placeholder { min-height:220px; }
     }
-
-
-    /* Portadas contiguas: dos en escritorio y una en móvil. */
-    #projects-carousel { gap:0; padding:0; scroll-snap-type:none; scrollbar-width:none; overscroll-behavior-x:contain; }
-    #projects-carousel::-webkit-scrollbar { display:none; }
-    #projects-carousel .project-card { flex:0 0 50%; min-width:0; padding:0; border-radius:0; background:transparent; opacity:1; transform:none; box-shadow:none; transition:none; }
-    #projects-carousel .project-open { position:relative; }
-    #projects-carousel .project-img { height:clamp(320px,42vw,540px); margin:0; border-radius:0; }
-    #projects-carousel .project-img img { display:block; }
-    #projects-carousel .project-info { position:absolute; inset:auto 0 0; padding:56px 26px 26px; background:linear-gradient(transparent,rgba(18,26,21,.85)); pointer-events:none; }
-    #projects-carousel .project-info h3, #projects-carousel .project-info p { color:white; }
-    #projects-carousel .project-open:focus-visible { outline:3px solid var(--pink-accent); outline-offset:-5px; }
-    @media(max-width:640px) {
-      #projects-carousel .project-card { flex-basis:100%; }
-      #projects-carousel .project-img { height:420px; height:min(60svh,460px); min-height:300px; }
-    }
+    @media(prefers-reduced-motion:reduce) { .carousel-track { will-change:auto; } }
   </style>
 </head>
 <body data-page="projects">
@@ -85,22 +96,26 @@
   </header>
 
   <main class="main-content">
-    <div class="container">
-      <div class="carousel-controls">
-        <span class="carousel-hint" id="carousel-hint">Explora los proyectos</span>
-        <button type="button" id="projects-play" aria-label="Pausar carrusel">Ⅱ</button>
-        <button type="button" id="projects-prev" aria-label="Proyectos anteriores">←</button>
-        <button type="button" id="projects-next" aria-label="Proyectos siguientes">→</button>
+    <section class="project-showcase" aria-label="Proyectos seleccionados">
+      <div class="carousel-stage">
+        <div id="projects-carousel" role="region" aria-label="Proyectos" tabindex="0">
+          <div class="carousel-track">
+<article class="project-card"><button type="button" class="project-open" data-project="0" aria-haspopup="dialog"><div class="project-img"><img src="proyecto1.jpg" alt="Lumière Cosmetics" loading="eager" decoding="async" draggable="false" width="800" height="1200"></div><div class="project-info"><div><h3>Lumière Cosmetics</h3><p data-i18n="projectBrandingPackaging">Branding y packaging</p></div></div></button></article>
+<article class="project-card"><button type="button" class="project-open" data-project="1" aria-haspopup="dialog"><div class="project-img"><img src="proyecto2.jpg" alt="Elevate Coaching" loading="eager" decoding="async" draggable="false" width="800" height="1000"></div><div class="project-info"><div><h3>Elevate Coaching</h3><p data-i18n="projectWebDesign">Diseño y desarrollo web</p></div></div></button></article>
+<article class="project-card"><button type="button" class="project-open" data-project="2" aria-haspopup="dialog"><div class="project-img"><img src="proyecto3.jpg" alt="Sofia Living" loading="eager" decoding="async" draggable="false" width="800" height="534"></div><div class="project-info"><div><h3>Sofia Living</h3><p data-i18n="projectBrandIdentity">Identidad de marca</p></div></div></button></article>
+<article class="project-card"><button type="button" class="project-open" data-project="3" aria-haspopup="dialog"><div class="project-img"><img src="proyecto4.jpg" alt="Solstice Candles" loading="eager" decoding="async" draggable="false" width="800" height="1200"></div><div class="project-info"><div><h3>Solstice Candles</h3><p data-i18n="projectBrandingPackaging">Branding y packaging</p></div></div></button></article>
+<article class="project-card"><button type="button" class="project-open" data-project="4" aria-haspopup="dialog"><div class="project-img"><img src="proyecto5.jpg" alt="Arcadia Realty" loading="eager" decoding="async" draggable="false" width="800" height="1066"></div><div class="project-info"><div><h3>Arcadia Realty</h3><p data-i18n="projectWebDesign">Diseño y desarrollo web</p></div></div></button></article>
+<article class="project-card"><button type="button" class="project-open" data-project="5" aria-haspopup="dialog"><div class="project-img"><img src="proyecto6.jpg" alt="Urban Harvest" loading="eager" decoding="async" draggable="false" width="800" height="1066"></div><div class="project-info"><div><h3>Urban Harvest</h3><p data-i18n="projectBrandIdentity">Identidad de marca</p></div></div></button></article>
+          </div>
+        </div>
+        <button type="button" class="carousel-arrow" id="projects-prev" aria-label="Proyectos anteriores"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button>
+        <button type="button" class="carousel-arrow" id="projects-next" aria-label="Proyectos siguientes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button>
       </div>
-      <div class="projects-full-grid" id="projects-carousel" role="region" aria-label="Proyectos" tabindex="0">
-        <article class="project-card"><button type="button" class="project-open" data-project="0" aria-haspopup="dialog"><div class="project-img"><img src="proyecto1.jpg" alt="Lumière Cosmetics" loading="lazy" width="800" height="1200"></div><div class="project-info"><div><h3>LUMIÈRE COSMETICS</h3><p data-i18n="projectBrandingPackaging">Branding y packaging</p></div></div></button></article>
-        <article class="project-card"><button type="button" class="project-open" data-project="1" aria-haspopup="dialog"><div class="project-img"><img src="proyecto2.jpg" alt="Elevate Coaching" loading="lazy" width="800" height="1000"></div><div class="project-info"><div><h3>ELEVATE COACHING</h3><p data-i18n="projectWebDesign">Diseño y desarrollo web</p></div></div></button></article>
-        <article class="project-card"><button type="button" class="project-open" data-project="2" aria-haspopup="dialog"><div class="project-img"><img src="proyecto3.jpg" alt="Sofia Living" loading="lazy" width="800" height="534"></div><div class="project-info"><div><h3>SOFIA LIVING</h3><p data-i18n="projectBrandIdentity">Identidad de marca</p></div></div></button></article>
-        <article class="project-card"><button type="button" class="project-open" data-project="3" aria-haspopup="dialog"><div class="project-img"><img src="proyecto4.jpg" alt="Solstice Candles" loading="lazy" width="800" height="1200"></div><div class="project-info"><div><h3>SOLSTICE CANDLES</h3><p data-i18n="projectBrandingPackaging">Branding y packaging</p></div></div></button></article>
-        <article class="project-card"><button type="button" class="project-open" data-project="4" aria-haspopup="dialog"><div class="project-img"><img src="proyecto5.jpg" alt="Arcadia Realty" loading="lazy" width="800" height="1066"></div><div class="project-info"><div><h3>ARCADIA REALTY</h3><p data-i18n="projectWebDesign">Diseño y desarrollo web</p></div></div></button></article>
-        <article class="project-card"><button type="button" class="project-open" data-project="5" aria-haspopup="dialog"><div class="project-img"><img src="proyecto6.jpg" alt="Urban Harvest" loading="lazy" width="800" height="1066"></div><div class="project-info"><div><h3>URBAN HARVEST</h3><p data-i18n="projectBrandIdentity">Identidad de marca</p></div></div></button></article>
+      <div class="carousel-meta">
+        <p class="carousel-hint" id="carousel-hint">Haz clic en una imagen para descubrir el proyecto</p>
+        <button type="button" id="projects-play" aria-label="Pausar carrusel"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 3h2v10H4zm6 0h2v10h-2z"/></svg><span>Pausar</span></button>
       </div>
-    </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -152,74 +167,147 @@
   let opener;
   const english = () => document.documentElement.lang === 'en';
   const play = document.getElementById('projects-play');
+  const track = carousel.querySelector('.carousel-track');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const originals = [...track.querySelectorAll('.project-card')];
   let paused = reducedMotion.matches;
   let hovered = false;
-  let touching = false;
+  let keyboardFocus = false;
   let manualUntil = 0;
   let previousTime = 0;
-  let fraction = 0;
-  const originals = [...carousel.querySelectorAll('.project-card')];
-  // Una copia permite pasar del último al primero sin un salto visible.
+  let offset = 0;
+  let cycle = 0;
+  let step = 0;
+  let tween = null;
+  let pointer = null;
+  let ignoreClickUntil = 0;
+  // Duplicamos una vuelta completa para enlazar el final con el principio.
   originals.forEach(card => {
     const copy = card.cloneNode(true);
     copy.setAttribute('aria-hidden', 'true');
     copy.querySelector('button').tabIndex = -1;
-    carousel.append(copy);
+    track.append(copy);
   });
-  function cycleWidth() {
-    return originals[0].getBoundingClientRect().width * originals.length;
+  const wrap = value => cycle ? ((value % cycle) + cycle) % cycle : 0;
+  function draw() {
+    offset = wrap(offset);
+    track.style.transform = 'translate3d(' + (-offset) + 'px,0,0)';
+  }
+  function measure() {
+    const oldStep = step;
+    step = originals[0].getBoundingClientRect().width;
+    cycle = step * originals.length;
+    if (oldStep) offset = offset / oldStep * step;
+    tween = null;
+    draw();
   }
   function updateControls() {
-    play.textContent = paused ? '▶' : 'Ⅱ';
+    const label = english() ? (paused ? 'Play' : 'Pause') : (paused ? 'Reproducir' : 'Pausar');
+    play.querySelector('span').textContent = label;
+    play.querySelector('path').setAttribute('d', paused ? 'M4 2l10 6-10 6z' : 'M4 3h2v10H4zm6 0h2v10h-2z');
     play.setAttribute('aria-label', english()
       ? (paused ? 'Play carousel' : 'Pause carousel')
       : (paused ? 'Reproducir carrusel' : 'Pausar carrusel'));
   }
   function move(direction) {
-    manualUntil = performance.now() + 3000;
-    const width = cycleWidth();
-    if (!width) return;
-    const step = originals[0].getBoundingClientRect().width;
-    carousel.scrollLeft = ((carousel.scrollLeft + direction * step) % width + width) % width;
-    fraction = 0;
+    if (!step || tween) return;
+    manualUntil = performance.now() + 3500;
+    if (reducedMotion.matches) {
+      offset += direction * step;
+      draw();
+    } else {
+      tween = { from:offset, to:offset + direction * step, start:performance.now() };
+    }
   }
   prev.addEventListener('click', () => move(-1));
   next.addEventListener('click', () => move(1));
   play.addEventListener('click', () => { paused = !paused; updateControls(); });
-  reducedMotion.addEventListener('change', () => { paused = reducedMotion.matches; updateControls(); });
-  carousel.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') hovered = true; });
-  carousel.addEventListener('pointerleave', () => { hovered = false; });
-  carousel.addEventListener('pointerdown', () => { touching = true; });
-  const release = () => { touching = false; manualUntil = performance.now() + 2500; };
+  reducedMotion.addEventListener('change', () => {
+    paused = reducedMotion.matches;
+    tween = null;
+    updateControls();
+  });
+  const stage = carousel.parentElement;
+  stage.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') hovered = true; });
+  stage.addEventListener('pointerleave', () => { hovered = false; });
+  carousel.addEventListener('focusin', event => {
+    keyboardFocus = event.target.matches(':focus-visible');
+    if (!keyboardFocus) return;
+    const button = event.target.closest('.project-open');
+    if (button) {
+      offset = Number(button.dataset.project) * step;
+      tween = null;
+      draw();
+      // El transform gestiona la posición; evitamos el desplazamiento nativo al enfocar.
+      carousel.scrollLeft = 0;
+    }
+  });
+  carousel.addEventListener('focusout', event => {
+    if (!carousel.contains(event.relatedTarget)) keyboardFocus = false;
+  });
+  carousel.addEventListener('pointerdown', event => {
+    if (event.button !== 0) return;
+    keyboardFocus = false;
+    tween = null;
+    pointer = { id:event.pointerId, x:event.clientX, y:event.clientY, from:offset, dragging:false };
+  });
+  carousel.addEventListener('pointermove', event => {
+    if (!pointer || event.pointerId !== pointer.id) return;
+    const dx = event.clientX - pointer.x;
+    const dy = event.clientY - pointer.y;
+    if (!pointer.dragging && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) {
+      pointer.dragging = true;
+      carousel.setPointerCapture(event.pointerId);
+    }
+    if (pointer.dragging) {
+      offset = pointer.from - dx;
+      draw();
+    }
+  });
+  function release(event) {
+    if (!pointer || event.pointerId !== pointer.id) return;
+    if (pointer.dragging) ignoreClickUntil = performance.now() + 500;
+    if (carousel.hasPointerCapture(event.pointerId)) carousel.releasePointerCapture(event.pointerId);
+    pointer = null;
+    manualUntil = performance.now() + 3000;
+  }
   window.addEventListener('pointerup', release);
   window.addEventListener('pointercancel', release);
-  carousel.addEventListener('wheel', () => { manualUntil = performance.now() + 2500; }, {passive:true});
-  carousel.addEventListener('scroll', () => {
-    const width = cycleWidth();
-    if (width && carousel.scrollLeft >= width && !carousel.contains(document.activeElement)) {
-      carousel.scrollLeft -= width;
-    }
-  }, {passive:true});
+  carousel.addEventListener('click', event => {
+    if (performance.now() < ignoreClickUntil) { event.preventDefault(); event.stopImmediatePropagation(); }
+  }, true);
+  carousel.addEventListener('wheel', event => {
+    const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.shiftKey ? event.deltaY : 0;
+    if (!delta) return;
+    event.preventDefault();
+    tween = null;
+    offset += delta;
+    draw();
+    manualUntil = performance.now() + 3000;
+  }, {passive:false});
   carousel.addEventListener('keydown', event => {
     if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
       event.preventDefault(); move(event.key === 'ArrowRight' ? 1 : -1);
     }
   });
   function animate(time) {
-    const elapsed = previousTime ? Math.min(time - previousTime, 50) : 0;
+    const elapsed = previousTime ? Math.min(time - previousTime, 60) : 0;
     previousTime = time;
-    if (!paused && !hovered && !touching && !dialog.open && !document.hidden &&
-        !carousel.contains(document.activeElement) && time > manualUntil) {
-      // 24 píxeles por segundo, independiente de la frecuencia de pantalla.
-      fraction += elapsed * 24 / 1000;
-      const pixels = Math.floor(fraction);
-      fraction -= pixels;
-      const width = cycleWidth();
-      if (width && pixels) carousel.scrollLeft = (carousel.scrollLeft + pixels) % width;
+    if (tween && !dialog.open && !document.hidden) {
+      const progress = Math.min((time - tween.start) / 650, 1);
+      offset = tween.from + (tween.to - tween.from) * (1 - Math.pow(1 - progress, 3));
+      draw();
+      if (progress === 1) tween = null;
+    } else if (!paused && !hovered && !pointer && !keyboardFocus && !dialog.open &&
+        !document.hidden && time > manualUntil) {
+      offset += elapsed * 28 / 1000;
+      draw();
     }
     requestAnimationFrame(animate);
   }
+  window.addEventListener('resize', measure);
+  document.addEventListener('visibilitychange', () => { previousTime = 0; });
+  measure();
   requestAnimationFrame(animate);
   document.querySelectorAll('.project-open').forEach(button => {
     button.addEventListener('click', () => {
@@ -273,7 +361,7 @@
     close.setAttribute('aria-label', en ? 'Close project' : 'Cerrar proyecto');
     gallery.setAttribute('aria-label', en ? 'Project images' : 'Imágenes del proyecto');
     document.getElementById('project-eyebrow').textContent = en ? 'Selected project' : 'Proyecto seleccionado';
-    document.getElementById('carousel-hint').textContent = en ? 'Explore the projects' : 'Explora los proyectos';
+    document.getElementById('carousel-hint').textContent = en ? 'Select an image to discover the project' : 'Haz clic en una imagen para descubrir el proyecto';
     updateControls();
   }
   new MutationObserver(translateControls).observe(document.documentElement, {attributes:true, attributeFilter:['lang']});
