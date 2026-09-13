@@ -19,6 +19,41 @@
     .projects-full-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
     @media (max-width: 1024px) { .projects-full-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 768px) { .projects-full-grid { grid-template-columns: 1fr; } }
+
+    /* Carrusel de proyectos y ficha con galería vertical. */
+    .projects-full-grid { display:flex; gap:24px; overflow-x:auto; scroll-snap-type:x mandatory; padding:8px 4px 24px; scrollbar-color:var(--olive-sage) var(--bg-cream); }
+    .projects-full-grid .project-card { flex:0 0 calc((100% - 48px)/3); scroll-snap-align:start; }
+    .project-open { display:block; width:100%; border:0; background:transparent; text-align:left; color:inherit; font:inherit; cursor:pointer; }
+    .projects-full-grid .project-img { height:320px; }
+    .carousel-controls { display:flex; align-items:center; justify-content:flex-end; gap:12px; margin-bottom:16px; }
+    .carousel-controls button, .project-close { width:46px; height:46px; border:1px solid var(--olive-sage); border-radius:50%; background:var(--bg-cream); color:var(--olive-dark); font-size:24px; cursor:pointer; }
+    .carousel-controls button:disabled { opacity:.35; cursor:default; }
+    .carousel-hint { margin-right:auto; color:var(--olive-sage); font-size:.85rem; }
+    .project-dialog { margin:auto; padding:0; width:min(1100px,94vw); height: min(800px,88vh); height:min(800px,88dvh); max-width:none; max-height:none; border:0; border-radius:20px; background:var(--bg-cream); color:var(--text-dark); overflow:hidden; box-shadow:0 24px 90px #0004; }
+    .project-dialog::backdrop { background:rgba(24,32,27,.72); }
+    .project-dialog-layout { display:grid; grid-template-columns:1fr 1.2fr; height:100%; min-height:0; }
+    .project-copy { padding:64px 40px 40px; overflow-y:auto; }
+    .project-copy h2 { font-family:var(--font-display); font-size:clamp(1.8rem,3vw,3rem); line-height:1.1; overflow-wrap:anywhere; margin:16px 0 24px; }
+    .project-copy p { color:var(--olive-sage); white-space:pre-line; }
+    .project-eyebrow { font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; }
+    .project-gallery { min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:64px 24px 24px; background:#ece8e1; scrollbar-gutter:stable; }
+    .project-gallery figure { margin:0 0 16px; }
+    .project-gallery img { display:block; width:100%; height:auto; border-radius:8px; }
+    .image-placeholder { min-height:270px; height:28vh; display:grid; place-items:center; border:1px dashed #a5aaa0; border-radius:8px; background:linear-gradient(135deg,#e1e6de,#eedbdb); color:var(--olive-sage); font-size:.9rem; }
+    .project-close { position:absolute; right:12px; top:12px; z-index:2; }
+    body.project-is-open { overflow:hidden; }
+    @media(max-width:1024px) { .projects-full-grid .project-card { flex-basis:calc((100% - 24px)/2); } }
+    @media(max-width:640px) {
+      .projects-full-grid .project-card { flex-basis:88%; }
+      .projects-full-grid .project-img { height:300px; }
+      .project-dialog { width:96vw; height:94dvh; }
+      .project-dialog-layout { grid-template-columns:1fr; grid-template-rows:auto minmax(0,1fr); }
+      .project-copy { padding:28px 60px 20px 24px; max-height:32dvh; }
+      .project-copy h2 { font-size:1.7rem; margin:8px 0 12px; }
+      .project-gallery { padding:20px; }
+      .image-placeholder { min-height:220px; }
+    }
+
   </style>
 </head>
 <body data-page="projects">
@@ -36,13 +71,18 @@
 
   <main class="main-content">
     <div class="container">
-      <div class="projects-full-grid">
-        <article class="project-card"><div class="project-img"><img src="proyecto1.jpg" alt="Lumière Cosmetics" loading="lazy" width="800" height="1200"></div><div class="project-info"><div><h3>LUMIÈRE COSMETICS</h3><p data-i18n="projectBrandingPackaging">Branding y packaging</p></div></div></article>
-        <article class="project-card"><div class="project-img"><img src="proyecto2.jpg" alt="Elevate Coaching" loading="lazy" width="800" height="1000"></div><div class="project-info"><div><h3>ELEVATE COACHING</h3><p data-i18n="projectWebDesign">Diseño y desarrollo web</p></div></div></article>
-        <article class="project-card"><div class="project-img"><img src="proyecto3.jpg" alt="Sofia Living" loading="lazy" width="800" height="534"></div><div class="project-info"><div><h3>SOFIA LIVING</h3><p data-i18n="projectBrandIdentity">Identidad de marca</p></div></div></article>
-        <article class="project-card"><div class="project-img"><img src="proyecto4.jpg" alt="Solstice Candles" loading="lazy" width="800" height="1200"></div><div class="project-info"><div><h3>SOLSTICE CANDLES</h3><p data-i18n="projectBrandingPackaging">Branding y packaging</p></div></div></article>
-        <article class="project-card"><div class="project-img"><img src="proyecto5.jpg" alt="Arcadia Realty" loading="lazy" width="800" height="1066"></div><div class="project-info"><div><h3>ARCADIA REALTY</h3><p data-i18n="projectWebDesign">Diseño y desarrollo web</p></div></div></article>
-        <article class="project-card"><div class="project-img"><img src="proyecto6.jpg" alt="Urban Harvest" loading="lazy" width="800" height="1066"></div><div class="project-info"><div><h3>URBAN HARVEST</h3><p data-i18n="projectBrandIdentity">Identidad de marca</p></div></div></article>
+      <div class="carousel-controls">
+        <span class="carousel-hint" id="carousel-hint">Explora los proyectos</span>
+        <button type="button" id="projects-prev" aria-label="Proyectos anteriores">←</button>
+        <button type="button" id="projects-next" aria-label="Proyectos siguientes">→</button>
+      </div>
+      <div class="projects-full-grid" id="projects-carousel" role="region" aria-label="Proyectos" tabindex="0">
+        <article class="project-card"><button type="button" class="project-open" data-project="0" aria-haspopup="dialog"><div class="project-img"><img src="proyecto1.jpg" alt="Lumière Cosmetics" loading="lazy" width="800" height="1200"></div><div class="project-info"><div><h3>LUMIÈRE COSMETICS</h3><p data-i18n="projectBrandingPackaging">Branding y packaging</p></div></div></button></article>
+        <article class="project-card"><button type="button" class="project-open" data-project="1" aria-haspopup="dialog"><div class="project-img"><img src="proyecto2.jpg" alt="Elevate Coaching" loading="lazy" width="800" height="1000"></div><div class="project-info"><div><h3>ELEVATE COACHING</h3><p data-i18n="projectWebDesign">Diseño y desarrollo web</p></div></div></button></article>
+        <article class="project-card"><button type="button" class="project-open" data-project="2" aria-haspopup="dialog"><div class="project-img"><img src="proyecto3.jpg" alt="Sofia Living" loading="lazy" width="800" height="534"></div><div class="project-info"><div><h3>SOFIA LIVING</h3><p data-i18n="projectBrandIdentity">Identidad de marca</p></div></div></button></article>
+        <article class="project-card"><button type="button" class="project-open" data-project="3" aria-haspopup="dialog"><div class="project-img"><img src="proyecto4.jpg" alt="Solstice Candles" loading="lazy" width="800" height="1200"></div><div class="project-info"><div><h3>SOLSTICE CANDLES</h3><p data-i18n="projectBrandingPackaging">Branding y packaging</p></div></div></button></article>
+        <article class="project-card"><button type="button" class="project-open" data-project="4" aria-haspopup="dialog"><div class="project-img"><img src="proyecto5.jpg" alt="Arcadia Realty" loading="lazy" width="800" height="1066"></div><div class="project-info"><div><h3>ARCADIA REALTY</h3><p data-i18n="projectWebDesign">Diseño y desarrollo web</p></div></div></button></article>
+        <article class="project-card"><button type="button" class="project-open" data-project="5" aria-haspopup="dialog"><div class="project-img"><img src="proyecto6.jpg" alt="Urban Harvest" loading="lazy" width="800" height="1066"></div><div class="project-info"><div><h3>URBAN HARVEST</h3><p data-i18n="projectBrandIdentity">Identidad de marca</p></div></div></button></article>
       </div>
     </div>
   </main>
@@ -62,6 +102,115 @@
       </div>
     </div>
   </footer>
+  <dialog class="project-dialog" id="project-dialog" aria-labelledby="project-title" aria-describedby="project-description">
+    <button type="button" class="project-close" id="project-close" aria-label="Cerrar proyecto" autofocus>×</button>
+    <div class="project-dialog-layout">
+      <div class="project-copy">
+        <p class="project-eyebrow" id="project-eyebrow">Proyecto seleccionado</p>
+        <h2 id="project-title"></h2>
+        <p id="project-description"></p>
+      </div>
+      <div class="project-gallery" id="project-gallery" tabindex="0" role="region" aria-label="Imágenes del proyecto"></div>
+    </div>
+  </dialog>
   <script src="script.js"></script>
+  <script>
+(() => {
+  // Agregar las rutas de las imágenes aquí, en el orden de la galería.
+  // Cada cadena vacía mantiene un espacio provisional, sin solicitar archivos rotos.
+  // Las descripciones pueden escribirse por proyecto en español e inglés.
+  const projects = [
+    { images: ['', '', '', '', '', '', ''], description: { es: '', en: '' } },
+    { images: ['', '', '', '', '', '', ''], description: { es: '', en: '' } },
+    { images: ['', '', '', '', '', '', ''], description: { es: '', en: '' } },
+    { images: ['', '', '', '', '', '', ''], description: { es: '', en: '' } },
+    { images: ['', '', '', '', '', '', ''], description: { es: '', en: '' } },
+    { images: ['', '', '', '', '', '', ''], description: { es: '', en: '' } }
+  ];
+  const carousel = document.getElementById('projects-carousel');
+  const prev = document.getElementById('projects-prev');
+  const next = document.getElementById('projects-next');
+  const dialog = document.getElementById('project-dialog');
+  const gallery = document.getElementById('project-gallery');
+  const close = document.getElementById('project-close');
+  let opener;
+  const english = () => document.documentElement.lang === 'en';
+  function updateControls() {
+    prev.disabled = carousel.scrollLeft < 2;
+    next.disabled = carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 2;
+  }
+  function move(direction) {
+    const card = carousel.querySelector('.project-card');
+    carousel.scrollBy({left: direction * (card.getBoundingClientRect().width + 24),
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+  }
+  prev.addEventListener('click', () => move(-1));
+  next.addEventListener('click', () => move(1));
+  carousel.addEventListener('scroll', updateControls, {passive:true});
+  window.addEventListener('resize', updateControls);
+  carousel.addEventListener('keydown', event => {
+    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+      event.preventDefault(); move(event.key === 'ArrowRight' ? 1 : -1);
+    }
+  });
+  document.querySelectorAll('.project-open').forEach(button => {
+    button.addEventListener('click', () => {
+      opener = button;
+      const project = projects[Number(button.dataset.project)];
+      const title = button.querySelector('h3').textContent;
+      document.getElementById('project-title').textContent = title;
+      document.getElementById('project-description').textContent =
+        project.description[english() ? 'en' : 'es'] || button.querySelector('p').textContent;
+      gallery.replaceChildren();
+      project.images.forEach((src, index) => {
+        const figure = document.createElement('figure');
+        const placeholder = () => {
+          const box = document.createElement('div');
+          box.className = 'image-placeholder';
+          box.textContent = (english() ? 'Image ' : 'Imagen ') + (index + 1);
+          figure.replaceChildren(box);
+        };
+        if (src) {
+          const img = document.createElement('img');
+          img.alt = title + ' — ' + (english() ? 'Image ' : 'Imagen ') + (index + 1);
+          img.loading = index < 2 ? 'eager' : 'lazy';
+          img.addEventListener('error', placeholder, {once:true});
+          img.src = src;
+          figure.append(img);
+        } else placeholder();
+        gallery.append(figure);
+      });
+      document.body.classList.add('project-is-open');
+      dialog.showModal();
+      gallery.scrollTop = 0;
+      dialog.querySelector('.project-copy').scrollTop = 0;
+      close.focus();
+    });
+  });
+  close.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', event => {
+    const bounds = dialog.getBoundingClientRect();
+    if (event.target === dialog && (event.clientX < bounds.left || event.clientX > bounds.right ||
+      event.clientY < bounds.top || event.clientY > bounds.bottom)) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    document.body.classList.remove('project-is-open');
+    opener?.focus({preventScroll:true});
+  });
+  function translateControls() {
+    const en = english();
+    prev.setAttribute('aria-label', en ? 'Previous projects' : 'Proyectos anteriores');
+    next.setAttribute('aria-label', en ? 'Next projects' : 'Proyectos siguientes');
+    carousel.setAttribute('aria-label', en ? 'Projects' : 'Proyectos');
+    close.setAttribute('aria-label', en ? 'Close project' : 'Cerrar proyecto');
+    gallery.setAttribute('aria-label', en ? 'Project images' : 'Imágenes del proyecto');
+    document.getElementById('project-eyebrow').textContent = en ? 'Selected project' : 'Proyecto seleccionado';
+    document.getElementById('carousel-hint').textContent = en ? 'Explore the projects' : 'Explora los proyectos';
+  }
+  new MutationObserver(translateControls).observe(document.documentElement, {attributes:true, attributeFilter:['lang']});
+  translateControls();
+  updateControls();
+})();
+</script>
 </body>
 </html>
