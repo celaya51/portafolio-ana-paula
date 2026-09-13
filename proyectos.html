@@ -54,6 +54,21 @@
       .image-placeholder { min-height:220px; }
     }
 
+
+    /* Portadas contiguas: dos en escritorio y una en móvil. */
+    #projects-carousel { gap:0; padding:0; scroll-snap-type:none; scrollbar-width:none; overscroll-behavior-x:contain; }
+    #projects-carousel::-webkit-scrollbar { display:none; }
+    #projects-carousel .project-card { flex:0 0 50%; min-width:0; padding:0; border-radius:0; background:transparent; opacity:1; transform:none; box-shadow:none; transition:none; }
+    #projects-carousel .project-open { position:relative; }
+    #projects-carousel .project-img { height:clamp(320px,42vw,540px); margin:0; border-radius:0; }
+    #projects-carousel .project-img img { display:block; }
+    #projects-carousel .project-info { position:absolute; inset:auto 0 0; padding:56px 26px 26px; background:linear-gradient(transparent,rgba(18,26,21,.85)); pointer-events:none; }
+    #projects-carousel .project-info h3, #projects-carousel .project-info p { color:white; }
+    #projects-carousel .project-open:focus-visible { outline:3px solid var(--pink-accent); outline-offset:-5px; }
+    @media(max-width:640px) {
+      #projects-carousel .project-card { flex-basis:100%; }
+      #projects-carousel .project-img { height:420px; height:min(60svh,460px); min-height:300px; }
+    }
   </style>
 </head>
 <body data-page="projects">
@@ -73,6 +88,7 @@
     <div class="container">
       <div class="carousel-controls">
         <span class="carousel-hint" id="carousel-hint">Explora los proyectos</span>
+        <button type="button" id="projects-play" aria-label="Pausar carrusel">Ⅱ</button>
         <button type="button" id="projects-prev" aria-label="Proyectos anteriores">←</button>
         <button type="button" id="projects-next" aria-label="Proyectos siguientes">→</button>
       </div>
@@ -135,24 +151,76 @@
   const close = document.getElementById('project-close');
   let opener;
   const english = () => document.documentElement.lang === 'en';
+  const play = document.getElementById('projects-play');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let paused = reducedMotion.matches;
+  let hovered = false;
+  let touching = false;
+  let manualUntil = 0;
+  let previousTime = 0;
+  let fraction = 0;
+  const originals = [...carousel.querySelectorAll('.project-card')];
+  // Una copia permite pasar del último al primero sin un salto visible.
+  originals.forEach(card => {
+    const copy = card.cloneNode(true);
+    copy.setAttribute('aria-hidden', 'true');
+    copy.querySelector('button').tabIndex = -1;
+    carousel.append(copy);
+  });
+  function cycleWidth() {
+    return originals[0].getBoundingClientRect().width * originals.length;
+  }
   function updateControls() {
-    prev.disabled = carousel.scrollLeft < 2;
-    next.disabled = carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 2;
+    play.textContent = paused ? '▶' : 'Ⅱ';
+    play.setAttribute('aria-label', english()
+      ? (paused ? 'Play carousel' : 'Pause carousel')
+      : (paused ? 'Reproducir carrusel' : 'Pausar carrusel'));
   }
   function move(direction) {
-    const card = carousel.querySelector('.project-card');
-    carousel.scrollBy({left: direction * (card.getBoundingClientRect().width + 24),
-      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+    manualUntil = performance.now() + 3000;
+    const width = cycleWidth();
+    if (!width) return;
+    const step = originals[0].getBoundingClientRect().width;
+    carousel.scrollLeft = ((carousel.scrollLeft + direction * step) % width + width) % width;
+    fraction = 0;
   }
   prev.addEventListener('click', () => move(-1));
   next.addEventListener('click', () => move(1));
-  carousel.addEventListener('scroll', updateControls, {passive:true});
-  window.addEventListener('resize', updateControls);
+  play.addEventListener('click', () => { paused = !paused; updateControls(); });
+  reducedMotion.addEventListener('change', () => { paused = reducedMotion.matches; updateControls(); });
+  carousel.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') hovered = true; });
+  carousel.addEventListener('pointerleave', () => { hovered = false; });
+  carousel.addEventListener('pointerdown', () => { touching = true; });
+  const release = () => { touching = false; manualUntil = performance.now() + 2500; };
+  window.addEventListener('pointerup', release);
+  window.addEventListener('pointercancel', release);
+  carousel.addEventListener('wheel', () => { manualUntil = performance.now() + 2500; }, {passive:true});
+  carousel.addEventListener('scroll', () => {
+    const width = cycleWidth();
+    if (width && carousel.scrollLeft >= width && !carousel.contains(document.activeElement)) {
+      carousel.scrollLeft -= width;
+    }
+  }, {passive:true});
   carousel.addEventListener('keydown', event => {
     if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
       event.preventDefault(); move(event.key === 'ArrowRight' ? 1 : -1);
     }
   });
+  function animate(time) {
+    const elapsed = previousTime ? Math.min(time - previousTime, 50) : 0;
+    previousTime = time;
+    if (!paused && !hovered && !touching && !dialog.open && !document.hidden &&
+        !carousel.contains(document.activeElement) && time > manualUntil) {
+      // 24 píxeles por segundo, independiente de la frecuencia de pantalla.
+      fraction += elapsed * 24 / 1000;
+      const pixels = Math.floor(fraction);
+      fraction -= pixels;
+      const width = cycleWidth();
+      if (width && pixels) carousel.scrollLeft = (carousel.scrollLeft + pixels) % width;
+    }
+    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
   document.querySelectorAll('.project-open').forEach(button => {
     button.addEventListener('click', () => {
       opener = button;
@@ -206,6 +274,7 @@
     gallery.setAttribute('aria-label', en ? 'Project images' : 'Imágenes del proyecto');
     document.getElementById('project-eyebrow').textContent = en ? 'Selected project' : 'Proyecto seleccionado';
     document.getElementById('carousel-hint').textContent = en ? 'Explore the projects' : 'Explora los proyectos';
+    updateControls();
   }
   new MutationObserver(translateControls).observe(document.documentElement, {attributes:true, attributeFilter:['lang']});
   translateControls();
