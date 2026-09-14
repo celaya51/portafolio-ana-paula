@@ -3,7 +3,7 @@ const translations = {
   es: {
     metaDescription: 'Portafolio de Ana Paula: branding, diseño web, contenido digital y marketing.',
     backHome: '← VOLVER AL INICIO',
-    projectsSubtitle: 'Una colección de identidades de marca, proyectos web y experiencias digitales creadas con estrategia y propósito.',
+    projectsSubtitle: 'Una colección de branding, proyectos web y experiencias digitales creadas con estrategia y propósito.',
     heroTitle: 'Portafolio',
     heroSubtitle: 'DISEÑO MARCAS, SITIOS WEB Y EXPERIENCIAS DIGITALES',
     heroDescription: 'Creo soluciones de diseño con propósito que elevan las marcas y conectan con las personas.',
