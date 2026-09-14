@@ -100,7 +100,7 @@
       <div class="carousel-stage">
         <div id="projects-carousel" role="region" aria-label="Proyectos" tabindex="0">
           <div class="carousel-track">
-<article class="project-card"><button type="button" class="project-open" data-project="0" aria-haspopup="dialog"><div class="project-img"><img src="proyecto1.jpg" alt="Lumière Cosmetics" loading="eager" decoding="async" draggable="false" width="800" height="1200"></div><div class="project-info"><div><h3>Lumière Cosmetics</h3><p data-i18n="projectBrandingPackaging">Branding y packaging</p></div></div></button></article>
+<article class="project-card"><button type="button" class="project-open" data-project="0" aria-haspopup="dialog"><div class="project-img"><img src="img/proyectos/ascendia/ascendia-01.webp" alt="Ascendia Residencial: identidad visual" loading="eager" decoding="async" draggable="false" width="1023" height="1537"></div><div class="project-info"><div><h3>Ascendia Branding</h3><p data-i18n="projectBrandIdentity">Identidad de marca</p></div></div></button></article>
 <article class="project-card"><button type="button" class="project-open" data-project="1" aria-haspopup="dialog"><div class="project-img"><img src="proyecto2.jpg" alt="Elevate Coaching" loading="eager" decoding="async" draggable="false" width="800" height="1000"></div><div class="project-info"><div><h3>Elevate Coaching</h3><p data-i18n="projectWebDesign">Diseño y desarrollo web</p></div></div></button></article>
 <article class="project-card"><button type="button" class="project-open" data-project="2" aria-haspopup="dialog"><div class="project-img"><img src="proyecto3.jpg" alt="Sofia Living" loading="eager" decoding="async" draggable="false" width="800" height="534"></div><div class="project-info"><div><h3>Sofia Living</h3><p data-i18n="projectBrandIdentity">Identidad de marca</p></div></div></button></article>
 <article class="project-card"><button type="button" class="project-open" data-project="3" aria-haspopup="dialog"><div class="project-img"><img src="proyecto4.jpg" alt="Solstice Candles" loading="eager" decoding="async" draggable="false" width="800" height="1200"></div><div class="project-info"><div><h3>Solstice Candles</h3><p data-i18n="projectBrandingPackaging">Branding y packaging</p></div></div></button></article>
@@ -151,7 +151,7 @@
   // Cada cadena vacía mantiene un espacio provisional, sin solicitar archivos rotos.
   // Las descripciones pueden escribirse por proyecto en español e inglés.
   const projects = [
-    { images: ['', '', '', '', '', '', ''], description: { es: '', en: '' } },
+    {"images":["img/proyectos/ascendia/ascendia-01.webp","img/proyectos/ascendia/ascendia-02.webp","img/proyectos/ascendia/ascendia-03.webp","img/proyectos/ascendia/ascendia-04.webp","img/proyectos/ascendia/ascendia-05.webp","img/proyectos/ascendia/ascendia-06.webp"],"imageSizes":[[1023,1537],[1200,1200],[922,1152],[2048,1902],[842,1264],[1024,1024]],"imageAlts":{"es":["Logotipo de Ascendia Residencial sobre una pared texturizada","Paleta de colores de Ascendia Residencial","Tarjetas de presentación de Ascendia Residencial","Diseño de brochure de Ascendia Residencial","Papelería y sobre de Ascendia Residencial","Aplicaciones de la marca Ascendia Residencial en redes sociales"],"en":["Ascendia Residencial logo on a textured wall","Ascendia Residencial color palette","Ascendia Residencial business cards","Ascendia Residencial brochure design","Ascendia Residencial stationery and envelope","Ascendia Residencial brand applications for social media"]},"description":{"es":"","en":""}},
     { images: ['', '', '', '', '', '', ''], description: { es: '', en: '' } },
     { images: ['', '', '', '', '', '', ''], description: { es: '', en: '' } },
     { images: ['', '', '', '', '', '', ''], description: { es: '', en: '' } },
@@ -328,7 +328,12 @@
         };
         if (src) {
           const img = document.createElement('img');
-          img.alt = title + ' — ' + (english() ? 'Image ' : 'Imagen ') + (index + 1);
+          img.alt = project.imageAlts?.[english() ? 'en' : 'es']?.[index] ||
+            title + ' — ' + (english() ? 'Image ' : 'Imagen ') + (index + 1);
+          if (project.imageSizes?.[index]) {
+            [img.width, img.height] = project.imageSizes[index];
+          }
+          img.decoding = 'async';
           img.loading = index < 2 ? 'eager' : 'lazy';
           img.addEventListener('error', placeholder, {once:true});
           img.src = src;
