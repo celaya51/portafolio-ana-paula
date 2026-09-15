@@ -19,6 +19,8 @@ const translations = {
     projectTitleAscendia: 'Ascendia Branding',
     projectTitleLegend: 'Legend Diseño Web',
     projectTitleInverti: 'Diseño de Campaña Digital Inverti Property',
+    projectTitleVistaVallarta: 'Vista Vallarta Diseño de Branding',
+    projectBrandingDesign: 'Diseño de Branding',
     projectBrandingPackaging: 'Branding y packaging',
     projectWebDesign: 'Diseño y desarrollo web',
     projectWebDesignOnly: 'Diseño Web',
@@ -73,6 +75,8 @@ const translations = {
     projectTitleAscendia: 'Ascendia Branding',
     projectTitleLegend: 'Legend Web Design',
     projectTitleInverti: 'Inverti Property Digital Campaign Design',
+    projectTitleVistaVallarta: 'Vista Vallarta Branding Design',
+    projectBrandingDesign: 'Branding Design',
     projectBrandingPackaging: 'Branding & Packaging',
     projectWebDesign: 'Web Design & Development',
     projectWebDesignOnly: 'Web Design',
@@ -177,3 +181,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setupRevealAnimations();
 });
+
