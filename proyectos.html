@@ -103,9 +103,9 @@
       <div class="carousel-stage">
         <div id="projects-carousel" role="region" aria-label="Proyectos" tabindex="0">
           <div class="carousel-track">
-<article class="project-card"><button type="button" class="project-open" data-project="0" aria-haspopup="dialog"><div class="project-img"><img src="img/proyectos/ascendia/ascendia-01.webp" alt="Ascendia Residencial: identidad visual" loading="eager" decoding="async" draggable="false" width="1023" height="1537"></div><div class="project-info"><div><h3>Ascendia Branding</h3><p data-i18n="projectBrandIdentity">Identidad de marca</p></div></div></button></article>
-<article class="project-card"><button type="button" class="project-open" data-project="1" aria-haspopup="dialog"><div class="project-img"><img src="img/proyectos/legend/legend-01.webp" alt="Legend: diseño web en computadora, tablet y celular" loading="eager" decoding="async" draggable="false" width="1672" height="941"></div><div class="project-info"><div><h3>Legend Diseño Web</h3><p data-i18n="projectWebDesignOnly">Diseño Web</p></div></div></button></article>
-<article class="project-card"><button type="button" class="project-open" data-project="2" aria-haspopup="dialog"><div class="project-img"><img src="img/proyectos/inverti-property/1.png" alt="Campaña digital de Inverti Property" loading="eager" decoding="async" draggable="false"></div><div class="project-info"><div><h3>Diseño de Campaña Digital Inverti Property</h3><p data-i18n="projectDigitalCampaign">Diseño de Campaña Digital</p></div></div></button></article>
+<article class="project-card"><button type="button" class="project-open" data-project="0" aria-haspopup="dialog"><div class="project-img"><img src="img/proyectos/ascendia/ascendia-01.webp" alt="Ascendia Residencial: identidad visual" loading="eager" decoding="async" draggable="false" width="1023" height="1537"></div><div class="project-info"><div><h3 data-i18n="projectTitleAscendia">Ascendia Branding</h3><p data-i18n="projectBrandIdentity">Identidad de marca</p></div></div></button></article>
+<article class="project-card"><button type="button" class="project-open" data-project="1" aria-haspopup="dialog"><div class="project-img"><img src="img/proyectos/legend/legend-01.webp" alt="Legend: diseño web en computadora, tablet y celular" loading="eager" decoding="async" draggable="false" width="1672" height="941"></div><div class="project-info"><div><h3 data-i18n="projectTitleLegend">Legend Diseño Web</h3><p data-i18n="projectWebDesignOnly">Diseño Web</p></div></div></button></article>
+<article class="project-card"><button type="button" class="project-open" data-project="2" aria-haspopup="dialog"><div class="project-img"><img src="img/proyectos/inverti-property/1.png" alt="Campaña digital de Inverti Property" loading="eager" decoding="async" draggable="false"></div><div class="project-info"><div><h3 data-i18n="projectTitleInverti">Diseño de Campaña Digital Inverti Property</h3><p data-i18n="projectDigitalCampaign">Diseño de Campaña Digital</p></div></div></button></article>
           </div>
         </div>
         <button type="button" class="carousel-arrow" id="projects-prev" aria-label="Proyectos anteriores"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button>
@@ -145,7 +145,7 @@
       <div class="project-gallery" id="project-gallery" tabindex="0" role="region" aria-label="Imágenes del proyecto"></div>
     </div>
   </dialog>
-  <script src="script.js?v=branding-subtitle"></script>
+  <script src="script.js?v=project-titles-en"></script>
   <script>
 (() => {
   // Agregar las rutas de las imágenes aquí, en el orden de la galería.
@@ -315,8 +315,11 @@
       projectWebsite.hidden = !project.website;
       if (project.website) projectWebsite.href = project.website;
       else projectWebsite.removeAttribute('href');
-      const title = button.querySelector('h3').textContent;
-      document.getElementById('project-title').textContent = title;
+      const titleElement = button.querySelector('h3');
+      const title = titleElement.textContent;
+      const dialogTitle = document.getElementById('project-title');
+      dialogTitle.dataset.i18n = titleElement.dataset.i18n;
+      dialogTitle.textContent = title;
       const description = project.description[english() ? 'en' : 'es'] || button.querySelector('p').textContent;
       const descriptionElement = document.getElementById('project-description');
       descriptionElement.replaceChildren();
