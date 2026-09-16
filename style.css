@@ -915,3 +915,46 @@ button:focus-visible {
     grid-template-columns: 108px 1fr;
   }
 }
+
+/* ================= WHATSAPP FLOTANTE ================= */
+.whatsapp-float {
+  position: fixed;
+  right: calc(24px + env(safe-area-inset-right, 0px));
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #25D366;
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+  text-decoration: none;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+.whatsapp-float img {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+.whatsapp-float:hover {
+  background: #1ebe5d;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.28);
+}
+.whatsapp-float:focus-visible {
+  outline: 3px solid var(--olive-dark);
+  outline-offset: 4px;
+}
+@media (max-width: 600px) {
+  .whatsapp-float {
+    right: calc(16px + env(safe-area-inset-right, 0px));
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    width: 56px;
+    height: 56px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-float { transition: none; }
+}

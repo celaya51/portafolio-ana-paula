@@ -6,7 +6,7 @@
   <title>Proyectos | Ana Paula Studio</title>
   <meta name="description" content="Proyectos seleccionados de Ana Paula: branding, diseño web, contenido digital y marketing." data-i18n-content="metaDescription">
   <link rel="icon" type="image/png" sizes="64x64" href="AP-favicon.png">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=whatsapp-float">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Mr+De+Haviland&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -146,6 +146,10 @@
       <div class="project-gallery" id="project-gallery" tabindex="0" role="region" aria-label="Imágenes del proyecto"></div>
     </div>
   </dialog>
+  <a class="whatsapp-float" id="whatsapp-float" href="https://wa.me/523310063004" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp: +52 33 1006 3004" title="WhatsApp: +52 33 1006 3004">
+    <img src="icons/whatsapp.svg" width="32" height="32" alt="" aria-hidden="true">
+  </a>
+
   <script src="script.js?v=vista-vallarta"></script>
   <script>
 (() => {
@@ -164,6 +168,7 @@
   const dialog = document.getElementById('project-dialog');
   const gallery = document.getElementById('project-gallery');
   const close = document.getElementById('project-close');
+  const whatsappFloat = document.getElementById('whatsapp-float');
   const projectWebsite = document.getElementById('project-website');
   let opener;
   const english = () => document.documentElement.lang === 'en';
@@ -360,6 +365,8 @@
         gallery.append(figure);
       });
       document.body.classList.add('project-is-open');
+      // Mantiene el acceso a WhatsApp dentro de la capa modal.
+      dialog.append(whatsappFloat);
       dialog.showModal();
       gallery.scrollTop = 0;
       dialog.querySelector('.project-copy').scrollTop = 0;
@@ -373,6 +380,7 @@
       event.clientY < bounds.top || event.clientY > bounds.bottom)) dialog.close();
   });
   dialog.addEventListener('close', () => {
+    document.body.append(whatsappFloat);
     document.body.classList.remove('project-is-open');
     opener?.focus({preventScroll:true});
   });
