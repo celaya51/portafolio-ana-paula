@@ -1,4 +1,12 @@
 @font-face {
+  font-family: 'Cralika';
+  src: url('fonts/cralika.otf') format('opentype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'NathingStill';
   src: url('fonts/NathingStill-Regular-BF6a75776225450.ttf') format('truetype');
   font-style: normal;
@@ -14,8 +22,8 @@
   --pink-accent: #D4A5A9;
   --text-dark: #232824;
   --white: #FFFFFF;
-  --font-serif: 'Playfair Display', serif;
-  --font-display: 'DM Serif Display', serif;
+  --font-serif: 'Cralika', serif;
+  --font-display: 'Cralika', serif;
   --font-signature: 'NathingStill', cursive;
   --font-sans: 'Plus Jakarta Sans', sans-serif;
 }
@@ -957,4 +965,11 @@ button:focus-visible {
 }
 @media (prefers-reduced-motion: reduce) {
   .whatsapp-float { transition: none; }
+}
+
+/* Cralika en todos los títulos y subtítulos del portafolio. */
+h1, h2, h3, h4, h5, h6,
+.services-card strong, .step-copy strong {
+  font-family: var(--font-display);
+  font-weight: 400;
 }
