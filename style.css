@@ -85,9 +85,9 @@ body {
 }
 
 .main-title {
-  font-family: var(--font-serif);
+  font-family: 'Cralika', serif;
   font-size: clamp(4rem, 9vw, 8rem);
-  font-weight: 700;
+  font-weight: 400;
   color: var(--olive-dark);
   line-height: 0.9;
   margin-bottom: 20px;
