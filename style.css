@@ -729,9 +729,19 @@ button:focus-visible {
     grid-column: 1 / -1;
     grid-row: 4;
   }
+  /* En móvil la foto del hero es un background anclado abajo a la derecha, así
+     que la silueta invade la última fila de datos. Apilamos la barra en una
+     sola columna alineada a la izquierda y la limitamos al ancho libre, de
+     modo que el teléfono, el correo y la disponibilidad nunca queden encima
+     de la imagen. */
   .hero-info-bar {
     grid-column: 1 / -1;
     grid-row: 5;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: min(72%, 240px);
+    min-width: 0;
   }
   .stats-card {
     grid-column: 1 / -1;
